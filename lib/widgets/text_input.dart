@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class TextInputWidget extends StatefulWidget {
   dynamic obscure;
@@ -28,7 +29,7 @@ class _TextInputWidgetState extends State<TextInputWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: 9.h,
       child: TextFormField(
         validator: widget.validation,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -36,9 +37,10 @@ class _TextInputWidgetState extends State<TextInputWidget> {
         obscureText: widget.obscure ?? false,
         decoration: InputDecoration(
           label: Text(widget.label),
+          labelStyle: TextStyle(fontSize: 16.sp, color: Colors.black),
           hintText: widget.hint ?? '',
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-          prefixIcon: Icon(widget.prefix, color: Colors.deepPurpleAccent ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.h)),
+          prefixIcon: Icon(widget.prefix, color: Colors.amber ),
           suffixIcon: widget.suffix != null ? IconButton(
             onPressed: () {
               setState(() {

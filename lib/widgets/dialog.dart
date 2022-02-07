@@ -2,6 +2,7 @@
 import 'package:chat_app/widgets/action.dart';
 import 'package:chat_app/widgets/dialog_details.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomDialog extends StatelessWidget {
   String? title;
@@ -30,53 +31,54 @@ class CustomDialog extends StatelessWidget {
         action2: action2);
     return Dialog(
       backgroundColor: Colors.transparent,
-      elevation: 0,
+      elevation: 0.h,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5.h),
       ),
       //insetPadding: const EdgeInsets.all(40),
       child: Stack(
         children: [
           Container(
-            padding:
-                const EdgeInsets.only(left: 20, top: 55, right: 20, bottom: 20),
-            margin: const EdgeInsets.only(top: 40),
+            padding: EdgeInsets.only(left: 2.h, top: 5.h, right: 2.h, bottom: 2.h),
+            margin: EdgeInsets.only(top: 4.h),
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                color: Colors.white, borderRadius: BorderRadius.circular(2.h)),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   details.title!,
                   style: TextStyle(
                     color: details.titleColor(),
-                    fontSize: 24,
+                    fontSize: 19.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
+                SizedBox(
+                  height: 1.h,
                 ),
                 Text(
                   details.content!,
-                  style: const TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15.sp),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: 2.h,
                 ),
                 details.actionButtons()
               ],
             ),
           ),
           Positioned(
-              right: 20,
-              left: 20,
+              right: 2.h,
+              left: 2.h,
               child: Align(
                 child: Container(
                     decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(40)),
+                        borderRadius: BorderRadius.circular(5.h)),
                     child: details.icon()
                 ),
               )),

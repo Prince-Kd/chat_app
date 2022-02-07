@@ -2,14 +2,19 @@ import 'package:chat_app/pages/home.dart';
 import 'package:chat_app/pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sizer/sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
   runApp(const MyApp());
 }
 
@@ -19,33 +24,38 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: '/',
-      routes: {
-        '/' : (context) => Login(),
-        'home': (content) => Home(),
-      },
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        appBarTheme: AppBarTheme(
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          initialRoute: '/',
+          routes: {
+            '/' : (context) => Login(),
+            'home': (content) => Home(),
+            'chat': (context) => ChatScreen(),
+          },
+          title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            appBarTheme: AppBarTheme(
 
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          labelStyle: TextStyle(
-            fontSize: 18,
-            color: Colors.grey[800]
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(
-              color: Colors.deepPurpleAccent
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              labelStyle: TextStyle(
+                fontSize: 18.sp,
+                color: Colors.grey[800]
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.h),
+                borderSide: const BorderSide(
+                  color: Colors.amber
+                )
+              )
             )
-          )
-        )
-      ),
-      //home: const Login(),
+          ),
+          //home: const Login(),
+        );
+      }
     );
   }
 }

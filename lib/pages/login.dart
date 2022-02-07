@@ -9,7 +9,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:hive/hive.dart';
+import 'package:sizer/sizer.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -38,8 +40,10 @@ class _LoginState extends State<Login> {
         try {
           UserCredential userCred = await auth.signInWithEmailAndPassword(
               email: email!, password: password!);
-          Navigator.pushReplacementNamed(context, 'home',
-              arguments: {'email': userCred.user!.email});
+          var user = await userCred.user;
+          print(user);
+          Hive.box('settings').put('user', user!.uid);
+          Navigator.pushReplacementNamed(context, 'home',);
           setState(() {
             loading = false;
           });
@@ -66,22 +70,22 @@ class _LoginState extends State<Login> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          elevation: 0,
+          elevation: 0.h,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(2.h),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text('Login to chat with friends',
+              Text('Login to chat with friends',
                   style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.deepPurpleAccent,
+                    fontSize: 20.sp,
+                    color: Colors.amber,
                     fontWeight: FontWeight.w600,
                   )),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: 3.h,
               ),
               Form(
                 key: _formKey,
@@ -100,8 +104,8 @@ class _LoginState extends State<Login> {
                       prefix: Icons.email,
                       obscure: false,
                     ),
-                    const SizedBox(
-                      height: 30,
+                    SizedBox(
+                      height: 3.h,
                     ),
                     TextInputWidget(
                       validation: Validators(field: 'Password').required,
@@ -120,10 +124,10 @@ class _LoginState extends State<Login> {
                         child: Text(
                           'Forgot password?',
                           textAlign: TextAlign.right,
-                          style: TextStyle(color: Colors.blue, fontSize: 16),
+                          style: TextStyle(color: Colors.blue, fontSize: 14.sp),
                         )),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: 2.h,
                     ),
                     AuthButton(
                       loading: loading,
@@ -132,16 +136,16 @@ class _LoginState extends State<Login> {
                             ? const CircularProgressIndicator.adaptive(
                                 backgroundColor: Colors.white,
                               )
-                            : const Text(
+                            : Text(
                                 'Login',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,
                                 ),
                               ),
                       ),
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.amber,
                       method: SignIn,
                     ),
                     TextButton(
@@ -149,21 +153,21 @@ class _LoginState extends State<Login> {
                         child: Text(
                           "Don't have an account?",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 15.sp,
                           ),
                         ))
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 2.h,
               ),
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                       flex: 1,
                       child: Divider(
-                        thickness: 2,
+                        thickness: 0.2.h,
                       )),
                   Expanded(
                       flex: 1,
@@ -171,14 +175,14 @@ class _LoginState extends State<Login> {
                           child: Text(
                         'OR',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 15.sp,
                           color: Colors.grey[600],
                         ),
                       ))),
-                  const Expanded(
+                  Expanded(
                       flex: 1,
                       child: Divider(
-                        thickness: 2,
+                        thickness: 0.2.h,
                       ))
                 ],
               ),
@@ -201,20 +205,20 @@ class _LoginState extends State<Login> {
               //     ),
               //     method: googleSignIn),
               SizedBox(
-                height: 15,
+                height: 1.h,
               ),
               AuthButton(
                   color: Colors.white,
-                  height: 40,
+                  height: 6,
                   content: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(CustomIcons.facebook_squared, color: Colors.blue),
+                    children: [
+                      const Icon(CustomIcons.facebook_squared, color: Colors.blue),
                       SizedBox(
-                        width: 20,
+                        width: 2.w,
                       ),
                       Text('Sign in with Facebook',
-                          style: TextStyle(color: Colors.blue, fontSize: 18))
+                          style: TextStyle(color: Colors.blue, fontSize: 15.sp))
                     ],
                   ),
                   method: () {})
