@@ -46,6 +46,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '148946101026',
     projectId: 'chat-app-f1641',
     storageBucket: 'chat-app-f1641.appspot.com',
+    databaseURL: 'https://chat-app-f1641-default-rtdb.firebaseio.com/'
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -53,6 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:148946101026:ios:b6eaca5232255ecb053b7b',
     messagingSenderId: '148946101026',
     projectId: 'chat-app-f1641',
+    databaseURL: 'https://chat-app-f1641-default-rtdb.firebaseio.com/',
     storageBucket: 'chat-app-f1641.appspot.com',
     androidClientId: '148946101026-tc1iafuauv7csoolurj0nmio17uaba4r.apps.googleusercontent.com',
     iosClientId: '148946101026-fv7n656g6apre43gvoegadhdaudaamgv.apps.googleusercontent.com',

@@ -4,6 +4,7 @@ import 'package:chat_app/widgets/custom_search.dart';
 import 'package:chat_app/widgets/dialog.dart';
 import 'package:chat_app/widgets/placeholder_tile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -19,6 +20,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   FirebaseAuth auth = FirebaseAuth.instance;
+
   Stream<List> getMessages() async* {
     await Future.delayed(const Duration(seconds: 3));
     yield [];
@@ -50,10 +52,16 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseDatabase.instance.ref('users').once().then((event){
+      // for(var user in event.snapshot.children){
+      //   users.add(user.value);
+      // }
+      print(event.snapshot.children);
+    });
     return ValueListenableBuilder(
       valueListenable: Hive.box('settings').listenable(),
       builder: (context, Box box, widget) {
-        var user = box.get('user');
+        String user = box.get('user').toString();
         print(user);
         return Scaffold(
             appBar: AppBar(
@@ -113,7 +121,7 @@ class _HomeState extends State<Home> {
                   if (snapshot.hasData) {
                     print(snapshot.data);
                     return ListView.separated(
-                        itemBuilder: (context, index) => ChatTile(),
+                        itemBuilder: (context, index) => ChatTile(user: user),
                         separatorBuilder: (context, index) => SizedBox(
                               height: 2.h,
                             ),

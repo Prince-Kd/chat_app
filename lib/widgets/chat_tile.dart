@@ -3,7 +3,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sizer/sizer.dart';
 
 class ChatTile extends StatelessWidget {
-  const ChatTile({Key? key}) : super(key: key);
+  final String user;
+  const ChatTile({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ChatTile extends StatelessWidget {
       title: Text(''),
       subtitle: Text(''),
       onTap: (){
-
+        Navigator.pushNamed(context, 'chat', arguments: {'user': user});
       },
     ));
   }

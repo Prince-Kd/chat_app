@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
+  Stream<List> searchUsers() async*{
+    List users = [];
+    FirebaseDatabase.instance.ref('users').once().then((event){
+      // for(var user in event.snapshot.children){
+      //   users.add(user.value);
+      // }
+      users.add(event.snapshot.children);
+    });
+    yield users;
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -60,7 +71,18 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    return Column();
+    return StreamBuilder(
+        stream: searchUsers(),
+        builder: (context, AsyncSnapshot snapshot){
+          print(snapshot.data);
+      return ListView.builder(
+          itemCount: snapshot.data?.length,
+          itemBuilder: (context, index){
+        return ListTile(
+          title: Text(snapshot.data![index] ?? 'No data found'),
+        );
+      });
+    });
   }
 }
 

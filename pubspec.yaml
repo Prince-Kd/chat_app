@@ -48,6 +48,8 @@ dependencies:
   firebase_storage: ^10.2.6
 #  google_sign_in: ^5.2.3
   sizer: ^2.0.15
+  bubble: ^1.2.1
+  firebase_database: ^9.0.6
 
 dev_dependencies:
   flutter_test:
